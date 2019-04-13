@@ -13,20 +13,30 @@ import redis
 from flask_session import Session
 # 前端的csrf防护机制
 from flask_wtf import CSRFProtect
+# 从config.py文件中导入配置信息
+from config import config_map
 
 
-# I 创建app
-app = Flask(__name__)
+# I 工厂模式用于创建不同的app实例，例如开发环境app/测试环境app
+# 创建app并将配置信息导入到app中
+def create_app(config_name):
+	"""
+	创建flask的应用对象
+	:param config_name: str 配置模式的模式名字（"develop", "product"）
+	:return: object 返回创建的app
+	"""
+	# 1.创建app
+	app = Flask (__name__)
 
+	# 2.根据对象名获取配置参数的类
+	config_class = config_map.get(config_name)
+	# 3.将配置信息导入到app当中
+	app.config.from_object (config_class)
+	# 4.返回创建的app
+	return app
 
-
-
-
-
-
-
-# II 将配置信息导入到app当中
-app.config.from_object(Config)
+# II 创建app实例
+app = create_app("develop")
 
 # III 创建数据库
 db = SQLAlchemy(app)
