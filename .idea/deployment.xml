@@ -5,7 +5,7 @@
       <paths name="ssh://pyvip@127.0.0.1:1234/home/pyvip/.virtualenvs/aihome/bin/python2">
         <serverdata>
           <mappings>
-            <mapping deploy="/tmp/pycharm_project_362" local="$PROJECT_DIR$" />
+            <mapping deploy="/study/flaskProject/aihome" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

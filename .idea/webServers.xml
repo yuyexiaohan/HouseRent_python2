@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="ssh://pyvip@127.0.0.1:1234/home/pyvip/.virtualenvs/aihome/bin/python2" name="ssh://pyvip@127.0.0.1:1234/home/pyvip/.virtualenvs/aihome/bin/python2">
-        <fileTransfer host="127.0.0.1" port="1234" accessType="SFTP">
+        <fileTransfer host="127.0.0.1" port="1234" rootFolder="/home/pyvip" accessType="SFTP">
           <option name="port" value="1234" />
         </fileTransfer>
       </webServer>
