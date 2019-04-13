@@ -3,12 +3,11 @@
 # Author : achjiang
 
 
-from flask import Flask
-
-
-app = Flask(__name__)
+from . import api
+from ihome import db
+from flask import current_app
 
 #
-@app.route("/v1.0/index")
+@api.route("/index")
 def index():
 	return "index page"

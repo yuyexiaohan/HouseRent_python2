@@ -2,6 +2,8 @@
 # Time : 2019/4/14
 # Author : achjiang
 
+import redis
+
 
 class Config(object):
 	"""配置信息"""

@@ -15,8 +15,7 @@ import redis
 from flask_session import Session
 # 前端的csrf防护机制
 from flask_wtf import CSRFProtect
-# 导入创建的蓝图
-from ihome import api_1_0
+
 
 
 
@@ -58,7 +57,8 @@ def create_app(config_name):
 
 	# 为flask补充csrf防护机制
 	CSRFProtect (app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
-
+	# 导入创建的蓝图
+	from ihome import api_1_0
 	# 注册蓝图
 	app.register_blueprint(api_1_0.api, url_prefix="/api/v1.0")
 
