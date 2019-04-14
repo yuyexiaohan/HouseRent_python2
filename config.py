@@ -12,8 +12,8 @@ class Config(object):
 	SECRET_KEY = "SDA008*LLQW"
 
 	# mysql数据库配置：
-	# 1.设置连接数据库的URL
-	SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@127.0.0.1:3306/ihome_python2"
+	# 1.设置连接数据库的URL:'mysql://用户名:密码@host:prot/database_name'
+	SQLALCHEMY_DATABASE_URI = "mysql://root:qwe123@127.0.0.1:3306/ihome_python2"
 	# 2.设置每次请求结束后会自动提交数据库中的改动
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 

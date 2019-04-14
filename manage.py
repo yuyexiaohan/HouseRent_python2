@@ -23,6 +23,10 @@ Migrate(app, db)
 
 # 设置指令，db--MigrateCommand
 manager.add_command("db", MigrateCommand)
+# 建立models.py文件后:
+# 1.使用`python2 manage.py db init`命令初始化，
+# 2.使用`python2 manage.py db migrate -m 'init tables'`命令初始化表
+# 3.使用'python manage.py db upgrade'命令升级
 
 
 if __name__ == "__main__":
