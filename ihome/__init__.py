@@ -17,6 +17,8 @@ import redis
 from flask_session import Session
 # 前端的csrf防护机制
 from flask_wtf import CSRFProtect
+# 从util工具文件夹中导入正则转换器
+from utils.commons import ReCoverter
 
 
 
@@ -74,10 +76,20 @@ def create_app(config_name):
 
 	# 为flask补充csrf防护机制
 	CSRFProtect (app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
+
+	# 为flask添加自定义的转换器
+	app.url_map.converters['re'] = ReCoverter
+
+
 	# 导入创建的蓝图,避免循环导包，什么时候用什么时候导入
 	from ihome import api_1_0
 	# 注册蓝图
 	app.register_blueprint(api_1_0.api, url_prefix="/api/v1.0")
+
+
+	# 注册提供静态文件的蓝图
+	from ihome import web_html
+	app.register_blueprint(web_html.html)
 
 	# 返回创建的app
 	return app
