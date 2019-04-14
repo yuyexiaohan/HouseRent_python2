@@ -57,7 +57,7 @@ def create_app(config_name):
 
 	# 为flask补充csrf防护机制
 	CSRFProtect (app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
-	# 导入创建的蓝图
+	# 导入创建的蓝图,避免循环导包，什么时候用什么时候导入
 	from ihome import api_1_0
 	# 注册蓝图
 	app.register_blueprint(api_1_0.api, url_prefix="/api/v1.0")

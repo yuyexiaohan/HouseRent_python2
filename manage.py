@@ -28,4 +28,6 @@ manager.add_command("db", MigrateCommand)
 if __name__ == "__main__":
 	# 主程序
 	# app.run()
+	print '程序开始运行...'
 	manager.run()
+	print '程序结束运行...'
