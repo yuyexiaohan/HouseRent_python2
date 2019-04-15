@@ -7,11 +7,12 @@ from . import api
 from ihome.utils.captcha.captcha import captcha
 from ihome import redis_store
 from ihome import constants
-from flask import current_app, jsonify # ?
+from flask import current_app, jsonify, make_response # ?
+from ihome.utils.response_code import RET
 
 
 # restful风格的url:GET 127.0.0.1/api/v1.0/image_codes/<image_code_id>
-@api.route("/get_image_code")
+@api.route("/image_codes/<image_code_id>")
 def get_image_code(image_code_id):
 	"""
 	获取图片验证码
@@ -39,7 +40,10 @@ def get_image_code(image_code_id):
 		redis_store.setex("image_code_%s" % image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES, text)
 	except Exception as e:
 		current_app.logger.error("redis存储图像识别码错误:%s" % e)
-		return jsonify(errno=1, error)
+		return jsonify(errno=RET.DATAERR, errmsg="save image code id failed")
 	# 返回图片
+	resp = make_response(image_data)
+	resp.headers["Content-Type"] = "image/jpg"
+	return resp
 
 
