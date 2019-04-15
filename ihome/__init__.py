@@ -72,10 +72,10 @@ def create_app(config_name):
 	redis_store = redis.StrictRedis (host=config_class.REDIS_HOST, port=config_class.REDIS_PORT)
 
 	# 利用flask_session 将session数据保存到redis数据库中
-	Session (app)  # 把Session当作类，将app作为参数传入这个类中
+	Session(app)  # 把Session当作类，将app作为参数传入这个类中
 
 	# 为flask补充csrf防护机制
-	CSRFProtect (app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
+	CSRFProtect(app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
 
 	# 为flask添加自定义的转换器
 	app.url_map.converters['re'] = ReCoverter

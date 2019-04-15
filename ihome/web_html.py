@@ -2,7 +2,11 @@
 # Time : 2019/4/15
 # Author : achjiang
 
-from flask import Blueprint, current_app
+
+# 引入蓝图
+from flask import Blueprint, current_app, make_response
+# 导入crsf进行跨域保护
+from flask_wtf import csrf
 
 
 
@@ -25,8 +29,18 @@ def get_html(html_file_name):
 	if html_file_name != "favicon.ico":
 		html_file_name = "html/" + html_file_name
 
+	# 创建一个csrf_token值
+	csrf_token = csrf.generate_csrf()
+
 	# flask提供的返回静态文件的全局方法
-	return current_app.send_static_file(html_file_name)
+	response = make_response(current_app.send_static_file(html_file_name))
+
+	# 设置cookie值
+	response.set_cookie("csrf_token", csrf_token)
+
+	# 不设置有效期，当前窗口关闭后无效
+
+	return response
 
 
 
