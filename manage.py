@@ -21,7 +21,7 @@ manager = Manager(app)
 # 将数据库添加都Migrate对象
 Migrate(app, db)
 
-# 设置指令，db--MigrateCommand
+# 设置指令，db==MigrateCommand
 manager.add_command("db", MigrateCommand)
 # 建立models.py文件后:
 # 1.使用`python2 manage.py db init`命令初始化，
