@@ -19,6 +19,12 @@ function generateUUID() {
 }
 
 function generateImageCode() {
+    // 形成图片验证码的后端地址，设置到页面中，让浏览器请求验证码图片
+    // 1. 生成图片验证码的编号
+    imageCodeId = generateUUID()
+    // 设置图片url
+    var url = "api/v1.0/image_codes/" + imageCodeId;
+    $(".image-code img").attr("src", url);
 }
 
 function sendSMSCode() {
