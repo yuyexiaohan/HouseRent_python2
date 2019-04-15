@@ -1,5 +1,5 @@
 ### flask-ihome项目指导
-1. 下载项目文件。
+1. 下载项目文件到指定文件夹。
 
 2. 使用`mkvirtualenv ihome_python2`创建一个项目的虚拟环境，并进入
 
