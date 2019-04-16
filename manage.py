@@ -34,4 +34,3 @@ if __name__ == "__main__":
 	# app.run()
 	print '程序开始运行...'
 	manager.run()
-	print '程序结束运行...'
