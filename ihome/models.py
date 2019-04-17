@@ -3,11 +3,9 @@
 # Author : achjiang
 
 # 从ihome的init.py中导入db对象
-from ihome import db
-
 from datetime import datetime
-# from ihome import constants
 from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class BaseModel(object):
@@ -31,6 +29,33 @@ class User(BaseModel, db.Model):
     avatar_url = db.Column(db.String(128))  # 用户头像路径
     houses = db.relationship("House", backref="user")  # 用户发布的房屋
     orders = db.relationship("Order", backref="user")  # 用户下的订单
+
+    # 加上property装饰器后，会把函数变为属性，属性名即为函数名
+    @property
+    def password(self):
+        """读取属性行为"""
+        # print(user.password) # 读取属性行为时被调用
+        # 函数的返回值作为属性值
+        # return "xxxx"
+        raise ArithmeticError("这个属性只能设置，不能读取")
+
+    # 使用@password.setter方法将password转化位User的属性
+    @password.setter
+    def password(self, origin_password):
+        """
+        设置属性 user.password == "xxxx"
+        :param origin_password:设置属性的数据，就是"xxxx"原始明文密码
+        :return:
+        """
+        self.password_hash = generate_password_hash(origin_password)
+
+    def check_password(self, password):
+        """
+        检查密码的正确性
+        :param password: 用户登录时填写的原始密码
+        :return: 如果正确，返回True, 否则返回Flase
+        """
+        return check_password_hash(self.password_hash, password)
 
 
 class Area(BaseModel, db.Model):

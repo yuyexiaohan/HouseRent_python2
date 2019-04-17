@@ -44,7 +44,9 @@ def get_image_code(image_code_id):
 		return jsonify(errno=RET.DATAERR, errmsg="save image code id failed")
 	# 返回图片
 	resp = make_response(image_data)
+	print("resp--:", resp)
 	resp.headers["Content-Type"] = "image/jpg"
+	print("resp:", resp, type(resp))
 	return resp
 
 
@@ -55,6 +57,7 @@ def get_sms_code(mobile):
 	# 获取参数
 	image_code = request.args.get("image_code")
 	image_code_id = request.args.get("image_code_id")
+	print("image_code：", image_code, "image_coed_id:", image_code_id)
 
 	# 校验参数
 	if not all([image_code_id, image_code]):
@@ -85,6 +88,8 @@ def get_sms_code(mobile):
 		# 表示用户验证码填写错误
 		return jsonify(errno=RET.DATAERR, errmsg="图片验证码错误")
 
+	# **********************************************************
+
 	#判断对于这个手机号的操作在60秒内是否有之前的记录，如果有就说明操作频繁，不做处理
 	try:
 		send_flag = redis_store.get("send_sms_code_%s" % mobile)
@@ -106,7 +111,7 @@ def get_sms_code(mobile):
 			return jsonify(errno=RET.DATAEXIST, errmsg="手机号已存在")
 
 	# 如果手机号不存在，则生成短信验证码
-	sms_code = "%06d" % random.randint(0, 999999)
+	sms_code = "%06d" % random.randint(0, 999999) # 生成6位随机短信验证码
 	print("sms_code:", sms_code)
 
 	# 保存真实的短信验证码
