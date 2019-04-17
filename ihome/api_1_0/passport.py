@@ -102,3 +102,4 @@ def register():
 
 	# 返回结果
 	return jsonify (errno=RET.OK, errmsg="注册成功")
+

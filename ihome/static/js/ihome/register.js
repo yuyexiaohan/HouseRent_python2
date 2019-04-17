@@ -1,3 +1,5 @@
+
+// js读取cookie的方法
 function getCookie(name) {
     var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
     return r ? r[1] : undefined;
@@ -168,6 +170,10 @@ $(document).ready(function() {
             data: req_json,
             contentType: "application/json",
             dataType: "json",
+            // 请求头，将csrf_token的值放在请求中，方便后端的csrf进行验证
+            headers: {
+                "X-CSRFToken": getCookie("csrf_token")
+            },
             success: function (resp) {
                 if (resp.errno == "0"){
                     // 注册成功，跳转到主页
