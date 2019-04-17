@@ -2,7 +2,6 @@
 # Time : 2019/4/15
 # Author : achjiang
 
-
 from . import api
 from ihome.utils.captcha.captcha import captcha
 from ihome import redis_store
@@ -14,7 +13,6 @@ import random
 from ihome.libs.rlyuntongxun.send_smspy import CCP
 
 
-
 # restful风格的url:GET 127.0.0.1/api/v1.0/image_codes/<image_code_id>
 @api.route("/image_codes/<image_code_id>")
 def get_image_code(image_code_id):
@@ -23,7 +21,6 @@ def get_image_code(image_code_id):
 	:return: 正常情况：验证码图片 异常：返回json
 	"""
 	# 业务逻辑处理
-
 	# 生成验证码图片
 	name, text, image_data = captcha.generate_captcha()
 	# 将验证码图片真实值和编号保存在redis中, 设置有效期
@@ -110,6 +107,7 @@ def get_sms_code(mobile):
 
 	# 如果手机号不存在，则生成短信验证码
 	sms_code = "%06d" % random.randint(0, 999999)
+	print("sms_code:", sms_code)
 
 	# 保存真实的短信验证码
 	try:
@@ -125,6 +123,7 @@ def get_sms_code(mobile):
 		ccp = CCP()
 		result = ccp.send_template_sms(mobile, [sms_code, int(constants.SMS_CODE_REDIS_EXPIRES/60)], 1)
 	except Exception as e:
+		current_app.logger.error(e)
 		return jsonify(errno=RET.THIRDERR, errmsg="第三方服务调用异常")
 
 	# 返回值
