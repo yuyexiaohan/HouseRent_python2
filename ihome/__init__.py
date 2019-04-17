@@ -75,7 +75,7 @@ def create_app(config_name):
 	Session(app)  # 把Session当作类，将app作为参数传入这个类中
 
 	# 为flask补充csrf防护机制
-	CSRFProtect(app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
+	# CSRFProtect(app)  # 把CSRFProtect当作类，将app作为参数传入这个类中
 
 	# 为flask添加自定义的转换器
 	app.url_map.converters['re'] = ReCoverter

@@ -44,9 +44,8 @@ def get_image_code(image_code_id):
 		return jsonify(errno=RET.DATAERR, errmsg="save image code id failed")
 	# 返回图片
 	resp = make_response(image_data)
-	print("resp--:", resp)
 	resp.headers["Content-Type"] = "image/jpg"
-	print("resp:", resp, type(resp))
+	# print("resp:", resp, type(resp))
 	return resp
 
 
@@ -74,7 +73,7 @@ def get_sms_code(mobile):
 	# 判断图片验证码是否过期
 	if real_image_code is None:
 		# 表示图片验证码没有或者过期
-		return jsonify(errno=RET.NODATA, errmag="图片验证码失效")
+		return jsonify(errno=RET.NODATA, errmsg="图片验证码失效")
 
 	# 比较后，删除图片验证码，需要放在这个位置
 	# 删除redis中的图片验证码，在验证1次后，用于防止用户使用同一个验证码进行多次校验
@@ -136,4 +135,4 @@ def get_sms_code(mobile):
 		# 发送成功
 		return jsonify(errno=RET.OK, errmsg="发送成功")
 	else:
-		return jsonify(errno=RET.THIRDERR, errm="第三方服务出错")
+		return jsonify(errno=RET.THIRDERR, errmsg="发送失败")

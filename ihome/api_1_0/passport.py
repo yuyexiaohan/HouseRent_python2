@@ -32,7 +32,7 @@ def register():
 		return jsonify(errno=RET.PARAMERR, errmsg="参数错误")
 
 	# 检验手机号
-	if not re.match(r"1[34578]\d{9}]", mobile):
+	if not re.match(r"1[34578]\d{9}", mobile):
 		# 表示格式不对
 		return jsonify(errno=RET.PARAMERR, errmsg="手机号格式错误")
 

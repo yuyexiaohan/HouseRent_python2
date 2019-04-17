@@ -52,7 +52,7 @@ function sendSMSCode() {
         image_code_id: imageCodeId //图片验证码的编号，全局变量
     };
 
-    // 像后端发送请求
+    // 向后端发送请求
     $.get("/api/v1.0/sms_codes/"+ mobile, req_data, function(resp){
         // resp是后端返回的响应值，因为后端返回的是json字符串，
         // 所以Ajax帮助把json字符串转换为js对象，resp就是转换后对象
@@ -73,7 +73,7 @@ function sendSMSCode() {
                 }
             }, 1000, 60)
         }else {
-            console.log(resp.errmsg);
+            console.log(resp);
             alert(resp.errmsg);
             $(".phonecode-a").attr("onclick", "sendSMSCode();");
         }
@@ -124,8 +124,11 @@ $(document).ready(function() {
     $("#password2").focus(function(){
         $("#password2-err").hide();
     });
+
+
+    // 为表单提交补充自定义的函数行为
     $(".form-register").submit(function(e){
-        e.preventDefault();
+        e.preventDefault(); // 阻止浏览器关于表单的自动默认提交行为
         mobile = $("#mobile").val();
         phoneCode = $("#phonecode").val();
         passwd = $("#password").val();
@@ -150,5 +153,30 @@ $(document).ready(function() {
             $("#password2-err").show();
             return;
         }
+
+        //通过Ajax向后端发送数据
+        var req_data = {
+            mobile: mobile,
+            sms_code: phoneCode,
+            password: passwd,
+            password2: passwd2
+        };
+        var req_json = JSON.stringify(req_data);
+        $.ajax({
+            url: "/api/v1.0/users",
+            type:"post",
+            data: req_json,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (resp) {
+                if (resp.errno == "0"){
+                    // 注册成功，跳转到主页
+                    location.href = "/index.html";
+                } else {
+                    alert(resp.errmsg);
+                }
+
+            }
+        })
     });
 })
