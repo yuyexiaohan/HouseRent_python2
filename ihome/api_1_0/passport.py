@@ -9,7 +9,7 @@ from flask import request, jsonify, current_app, session
 from ihome.utils.response_code import RET
 import re
 # 导入redis实例对象
-from ihome import redis_store, db
+from ihome import redis_store, db, constants
 from ihome.models import User
 from sqlalchemy.exc import IntegrityError
 
@@ -103,3 +103,70 @@ def register():
 	# 返回结果
 	return jsonify (errno=RET.OK, errmsg="注册成功")
 
+@api.route("/sessions", methods=["POST"])
+def login():
+	"""用户登录"""
+	req_dic = request.get_json()
+	mobile = req_dic.get("mobile")
+	password = req_dic.get("password")
+
+	# 数据完整性判断
+	if not all([mobile, password]):
+		return jsonify(errno=RET.DATAERR, errmsg="参数错误")
+
+	# 手机号格式
+	if not re.match(r"1[34578]\d{9}", mobile):
+		return jsonify(errno=RET.PARAMERR, errmsg="参数错误")
+
+	# 判断错误次数，限制，超过则返回
+	# redis记录："access_nums_请求的ip":"次数"
+	user_ip = request.remote_addr  # 获取用户IP
+	try:
+		access_nums = redis_store.get("access_num_%s" % user_ip)
+	except Exception as e:
+		current_app.logger.error(e)
+	else:
+		if access_nums is not None and int(access_nums) >= constants.LOGIN_ERROR_MAX_TIME:
+			return jsonify(errno=RET.REQERR, errmsg="登录错误次数过多，请稍后再试！")
+
+	# 使用手机号查询用户
+	try:
+		user = User.query.filter_by(mobile=mobile).first()
+	except Exception as e:
+		current_app.logger.error(e)
+		return jsonify(errno=RET.DATAERR, errmsg="获取用户数据失败！")
+
+	# 判断数据是否匹配
+	if user is None or not user.check_password(password):
+		# 如果失败，记录失败次数，返回信息
+		try:
+			redis_store.incr("access_num_%s" % user_ip)
+			redis_store.expire("access_num_%s" % user_ip, constants.NOT_LOGIN_TIME)
+		except Exception as e:
+			current_app.logger.error(e)
+		return jsonify(errno=RET.DATAERR, errmsg="用户名或密码错误")
+
+	# 如果验证成功，将登录状态保存在session的缓存中
+	session["name"] = user.name
+	session["mobile"] = user.mobile
+	session["user_id"] = user.id
+	return jsonify(errno=RET.OK, errmsg="登录成功")
+
+@api.route("/session", methods=["GET"])
+def check_login():
+	"""检查登陆状态"""
+	# 尝试从session中获取用户的名字
+	name = session.get("name")
+	# 如果session中数据name名字存在，则表示用户已登录，否则未登录
+	if name is not None:
+		return jsonify(errno=RET.OK, errmsg="true", data={"name": name})
+	else:
+		return jsonify(errno=RET.SESSIONERR, errmsg="false")
+
+
+@api.route("/session", methods=["DELETE"])
+def logout():
+	"""登出"""
+	# 清除session数据
+	session.clear()
+	return jsonify(errno=RET.OK, errmsg="OK")
