@@ -47,7 +47,7 @@ $(document).ready(function() {
                 "x-CSRFToken": getCookie("csrf_token")
             },
             success: function (resp) {
-                if (resp.errno == "0"){
+                if (resp.errno === "0"){
                     //登录成功，跳转到主页
                     location.href = "/";
                 }else {
