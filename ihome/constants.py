@@ -19,3 +19,9 @@ LOGIN_ERROR_MAX_TIME = 5
 
 # 不允许用户登录的过期时间， 单位：秒
 NOT_LOGIN_TIME = 600
+
+# 七牛的域名
+QINIU_URL_DOMAIN = "http://pq53vhclw.bkt.clouddn.com/"
+
+# 城区信息的缓存时间, 单位：秒
+AREA_INFO_REDIS_CACHE_EXPIRES = 7200

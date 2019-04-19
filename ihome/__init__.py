@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 # 导入flask框架
 from flask import Flask
 # 从config.py文件中导入配置信息
-from config import config_map
+from ihome.config import config_map
 # 导入SQLAlchemy用以创建数据库
 from flask_sqlalchemy import SQLAlchemy
 # 导入redis用于缓存
@@ -19,8 +19,6 @@ from flask_session import Session
 from flask_wtf import CSRFProtect
 # 从util工具文件夹中导入正则转换器
 from utils.commons import ReCoverter
-
-
 
 
 # 创建数据库
