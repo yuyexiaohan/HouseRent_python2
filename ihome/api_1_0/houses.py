@@ -18,7 +18,11 @@ from ihome.models import Area
 def get_areas_info():
 	"""获取地域信息"""
 	# 查询数据库，获取房屋信息
-	
+	try:
+		area_li = Area.query.all()
+	except Exception as e:
+		current_app.logger.error(e)
+		return jsonify(errno=RET.DBERR, errmsg="数据库异常")
 	#
 	pass
 

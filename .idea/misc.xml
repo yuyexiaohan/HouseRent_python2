@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 2.7.12 (ssh://pyvip@127.0.0.1:1234/home/pyvip/.virtualenvs/aihome/bin/python2)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 2.7.12 (ssh://pyvip@127.0.0.1:1234/home/pyvip/.virtualenvs/aihome/bin/python2.7)" project-jdk-type="Python SDK" />
 </project>
