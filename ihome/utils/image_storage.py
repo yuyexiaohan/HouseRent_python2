@@ -6,14 +6,15 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
 
-from qiniu import Auth, put_file
+from qiniu import Auth, put_data
+import parameter
 
 
 #需要填写你的 Access Key 和 Secret Key
-# access_key = self_config.Access_Key
-access_key = "AnE70UQaiqokVXUT7v3BGYNAVWo5oey8UA3fEdsD"
-# secret_key = self_config.Secret_Key
-secret_key = "BIGPCz55HcnTtq3RqDgMfeLUtvwTaBGnVKNs4gyN"
+access_key = parameter.Access_Key
+
+secret_key = parameter.Secret_Key
+
 
 
 def storage(file_data):
@@ -26,8 +27,8 @@ def storage(file_data):
 	q = Auth(access_key, secret_key)
 
 	#要上传的空间
-	# bucket_name = self_config.Bucket_Name
-	bucket_name = "python2"
+	bucket_name = parameter.Bucket_Name
+
 
 	# #上传后保存的文件名
 	# key = 'my-python-logo.png'
@@ -38,7 +39,7 @@ def storage(file_data):
 	# #要上传文件的本地路径
 	# localfile = './sync/bbb.jpg'
 
-	ret, info = put_file(token, None, file_data)
+	ret, info = put_data(token, None, file_data)
 	print(info)
 	print("*"*20)
 	print(ret)
@@ -53,7 +54,7 @@ def storage(file_data):
 		raise Exception ("上传七牛失败")
 
 if __name__ == '__main__':
-	file_path = str("./1.jpg")
+	file_path = r"./1.jpg"
 	with open(file_path, "rb") as f:
 		file_data = f.read()
 		storage(file_data)
