@@ -33,22 +33,24 @@ def set_user_avatar():
 	# 调用七牛云图片，返回文件名
 	try:
 		file_name = storage(image_data)
-		# print("file_name:", file_name) # 'file_name:', u'FpR00_sSXdVNzb23TRRfRzJWgAlg'
 	except Exception as e:
 		current_app.logger.error(e)
 		return jsonify(errno=RET.THIRDERR, errmsg="上传图片失败")
 
 	# 保存文件名到数据库
+	print("file_name:", file_name)
 	try:
 		User.query.filter_by(id=user_id).update({"avatar_url": file_name})
+		db.session.commit()
 	except Exception as e:
 		db.session.rollback()
 		current_app.logger.error(e)
 		return jsonify(errno=RET.DBERR, errmsg="保存图片信息失败")
 
 	avatar_url = constants.QINIU_URL_DOMAIN + file_name
+	print("avatar_url:", avatar_url)
 	# 保存成功后返回
-	return jsonify(errno=RET.OK, errmsg="保存成功", data={"avatar_url":avatar_url})
+	return jsonify(errno=RET.OK, errmsg="保存成功", data={"avatar_url": avatar_url})
 
 
 @api.route("/users/name", methods=["PUT"])
