@@ -13,7 +13,7 @@ function logout() {
            "X-CSRFToken": getCookie("csrf_token")
        },
        success: function (resp) {
-           if (resp.errno == "0") {
+           if (resp.errno === "0") {
                location.href = "/";
            }
        }
@@ -23,11 +23,11 @@ function logout() {
 $(document).ready(function(){
     $.get("/api/v1.0/user", function (resp) {
         // 用户登录
-       if (resp.erron == "4101") {
+       if (resp.erron === "4101") {
            location.href = "login.html";
        }
        // 查询到了用户信息
-        else if (resp.erron == "0") {
+        else if (resp.errno === "0") {
            $("#user-name").html(resp.data.name);
            $("#user-mobile").html(resp.data.mobile);
            if (resp.data.avatar) {
@@ -35,4 +35,4 @@ $(document).ready(function(){
            }
        }
     }, "json");
-})
+});
