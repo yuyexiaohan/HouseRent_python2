@@ -67,8 +67,9 @@ $(document).ready(function () {
         }
         $.ajax({
             url:"/api/v1.0/users/name",
-            type: "PUT",
+            type: "put",
             data: JSON.stringify({name: name}),
+            contentType: "application/json",
             dataType: "json",
             headers:{
                 "X-CSRFToken": getCookie("csrf_token")

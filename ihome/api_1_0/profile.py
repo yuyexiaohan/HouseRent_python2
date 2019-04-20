@@ -19,13 +19,10 @@ def set_user_avatar():
 	设置用户的头像
 	参数：图片， 用户id(g.user.id)
 	"""
-	print("*" * 20)
 	user_id = g.user_id
 
 	# 获取图片
 	image_file = request.files.get("avatar")
-	# image_file.encoding("utf8")
-	print("image_file:", image_file, type(image_file))
 
 	if image_file is None:
 		return jsonify(errno=RET.PARAMERR, errmsg="未上传图片")
@@ -36,7 +33,7 @@ def set_user_avatar():
 	# 调用七牛云图片，返回文件名
 	try:
 		file_name = storage(image_data)
-		print("file_name:", file_name)
+		# print("file_name:", file_name) # 'file_name:', u'FpR00_sSXdVNzb23TRRfRzJWgAlg'
 	except Exception as e:
 		current_app.logger.error(e)
 		return jsonify(errno=RET.THIRDERR, errmsg="上传图片失败")
@@ -54,7 +51,7 @@ def set_user_avatar():
 	return jsonify(errno=RET.OK, errmsg="保存成功", data={"avatar_url":avatar_url})
 
 
-@api.route("users/name", methods=["PUT"])
+@api.route("/users/name", methods=["PUT"])
 @login_required
 def change_user_name():
 	"""修改用户名"""
@@ -63,10 +60,12 @@ def change_user_name():
 
 	# 获取用户想要设置的用户名
 	req_data= request.get_json()
+
 	if not req_data:
 		return jsonify(errno=RET.PARAMERR, errmsg="参数不全")
 
 	name = req_data.get("name") # 获取用户填写的名字
+
 	if not name:
 		return jsonify(errno=RET.PARAMERR, errmsg="名字不能为空")
 
