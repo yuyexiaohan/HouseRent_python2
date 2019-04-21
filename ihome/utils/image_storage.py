@@ -40,9 +40,9 @@ def storage(file_data):
 	# localfile = './sync/bbb.jpg'
 
 	ret, info = put_data(token, None, file_data)
-	print(info)
-	print("*"*20)
-	print(ret)
+	# print(info)
+	# print("*"*20)
+	# print(ret)
 	# assert ret['key'] == key
 	# assert ret['hash'] == etag(localfile)
 
