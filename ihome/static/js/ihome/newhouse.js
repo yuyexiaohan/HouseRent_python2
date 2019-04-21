@@ -8,32 +8,36 @@ $(document).ready(function(){
     $.get("/api/v1.0/areas", function (resp) {
         if (resp.errno === "0") {
             var areas = resp.data;
-            for (i=0; i<areas.length; i++) {
-                var area = areas[i];
-                $("#area-id").append('<option value="'+ area.aid +'">'+ area.aname +'</option>');
-            }
+            // for (i=0; i<areas.length; i++) {
+            //     var area = areas[i];
+            //     $("#area-id").append('<option value="'+ area.aid +'">'+ area.aname +'</option>');
+            // }
 
             // 使用js模板
-            var html = template("areas-tmpl", {areas: areas})
+            var html = template("areas-templ", {areas: areas});
             $("#area-id").html(html);
         } else {
             alert(resp.errmsg);
         }
-
-
-    })
+    });
 
     $("#form-house-info").submit(function (e) {
+        // 阻止form默认提交数据
         e.preventDefault();
-
         // 处理表单提交的数据
         var data = {};
+        // 使用map方法将数据映射到数据中去
         $("#form-house-info").serializeArray().map(function (x) { data[x.name]=x.value });
-
+        // $("#form-house-info").serializeArray() 打印结果：
+        /*
+        (12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+        0: {name: "title", value: ""}
+        1: {name: "price", value: ""}
+        */
         // 收集设置的id信息
         var facility = [];
         $(":checked[name=facility]").each(function (index, x) {
-            facilty[index] = $(x).val()
+            facility[index] = $(x).val()
         });
         data.facility = facility;
 
@@ -41,10 +45,10 @@ $(document).ready(function(){
         $.ajax({
             url: "/api/v1.0/houses/info",
             type: "post",
-            contenType: "application/json",
+            contentType: "application/json",
             data: JSON.stringify(data),
             dataType: "json",
-            hraders: {
+            headers: {
                 "X-CSRFToken": getCookie("csrf_token")
             },
             success: function (resp) {
@@ -75,19 +79,18 @@ $(document).ready(function(){
             type: "post",
             dataType: "json",
             headers: {
-                "X-CSRFToken": getCookie("csrf_token"),
+                "X-CSRFToken": getCookie("csrf_token")
             },
             success: function (resp) {
                 if (resp.errno === "4101") {
                     loaction.href = "/login.html";
                 } else if (resp.errno === "0") {
-                    $(".house-image-cons").append('<img src="'+ resp.data.image_url'">');
+                    // 在class=house-image-cons中添加img标签
+                    $(".house-image-cons").append('<img src="' + resp.data.image_url +'">');
                 } else {
                     alert(resp.errmsg);
                 }
             }
-
-
         })
     })
 });

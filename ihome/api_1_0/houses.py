@@ -222,7 +222,7 @@ def save_house_image():
 		return jsonify(errno=RET.DBERR, errmsg="保存图片信息异常")
 
 	image_url = constants.QINIU_URL_DOMAIN + file_name
-	return jsonify(errno=RET.OK, errmsg="图片上传成功", data={"iamge_url": image_url})
+	return jsonify(errno=RET.OK, errmsg="图片上传成功", data={"image_url": image_url})
 
 
 
