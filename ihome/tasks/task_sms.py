@@ -22,4 +22,7 @@ def send_sms(to, datas, temp_id):
     :return:
     """
     ccp = CCP()
-    ccp.send_template_sms()
+    ccp.send_template_sms(to, datas, temp_id)
+
+    # celery开启的命令
+    # celery -A ihome.tasks.task_sms worker -l info
