@@ -212,8 +212,17 @@ def get_sms_code(mobile):
 		return jsonify(errno=RET.DBERR, errmsg="短信验证码异常")
 
 	# 发送短信
-	# 使用celery异步发送短信
+	# 使用celery异步发送短信,delay函数调用后立即返回（非阻塞）
 	send_sms.delay(mobile, [sms_code, int(constants.SMS_CODE_REDIS_EXPIRES/60)], 1)
+
+	# 返回异步任务的对象
+	result_obj = send_sms.delay(mobile, [sms_code, int(constants.SMS_CODE_REDIS_EXPIRES / 60)], 1)
+
+	print(result_obj.id)
+
+	# 通过异步任务对象的get方法获取异步任务的结果, 默认get方法是阻塞的
+	ret = result_obj.get()
+	print("ret=%s" % ret)
 
 	# 返回值
 	# 发送成功
