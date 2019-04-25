@@ -142,7 +142,7 @@ class House(BaseModel, db.Model):
             "order_count": self.order_count,
             "address": self.address,
             "user_avatar": constants.QINIU_URL_DOMAIN + self.user.avatar_url if self.user.avatar_url else "",
-            # 将时间转换成相应格式的字符串类型
+            # 将时间转换成字符串类型返回前端
             "ctime": self.create_time.strftime("%Y-%m-%d")
         }
         return house_dict
