@@ -109,7 +109,7 @@ def get_user_auth():
 
 	# 在数据库中查询信息
 	try:
-		user = User.query.get(id=user_id)
+		user = User.query.get(user_id)
 	except Exception as e:
 		current_app.logger.error(e)
 		return jsonify(errno=RET.DBERR, errmsg="获取用户数据失败")
