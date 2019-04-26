@@ -48,7 +48,7 @@ function goToSearchPage(th) {
     url += ("aid=" + $(th).attr("area-id"));
     url += "&";
     var areaName = $(th).attr("area-name");
-    if (undefined == areaName) areaName="";
+    if (undefined === areaName) areaName="";
     url += ("aname=" + areaName);
     url += "&";
     url += ("sd=" + $(th).attr("start-date"));
@@ -59,8 +59,8 @@ function goToSearchPage(th) {
 
 $(document).ready(function(){
     // 检查用户登录状态
-    $.get("api/v1.0/session", function (resp) {
-       if (resp.errno == "0") {
+    $.get("/api/v1.0/session", function (resp) {
+       if (resp.errno === "0") {
            $(".top-bar>.user-info>.user-name").html(resp.data.name);
            $(".top-bar>.user-info").show();
        }else {
@@ -69,19 +69,38 @@ $(document).ready(function(){
     }, "json");
 
     // 设置幻灯片对象，开启幻灯片的滚动，必须放在页面参数填充完之后，执行这段代码
-    var mySwiper = new Swiper ('.swiper-container', {
-        loop: true,
-        autoplay: 2000,
-        autoplayDisableOnInteraction: false,
-        pagination: '.swiper-pagination',
-        paginationClickable: true
-    }); 
-    $(".area-list a").click(function(e){
-        $("#area-btn").html($(this).html());
-        $(".search-btn").attr("area-id", $(this).attr("area-id"));
-        $(".search-btn").attr("area-name", $(this).html());
-        $("#area-modal").modal("hide");
+
+    /******获取幻灯片的json动态页面代码*******/
+    $.get("/api/v1.0/houses/index", function (resp) {
+       if (resp.errno === "0") {
+           $(".swiper-wrapper").html(template("swiper-houses-templ", {houses:resp.data}));
+
+           // 设置幻灯片对象，开启幻灯片滚动
+            var mySwiper = new Swiper ('.swiper-container', {
+                loop: true,
+                autoplay: 2000,
+                autoplayDisableOnInteraction: false,
+                pagination: '.swiper-pagination',
+                paginationClickable: true
+            });
+       }
     });
+
+    // 动态获取区域信息
+    $.get("/api/v1.0/areas", function (resp) {
+       if (resp.errno === "0") {
+           $(".area-list").html(template("area-list-tmpl", {areas:resp.data}));
+           /******获取区域信息的静态页面代码*******/
+            $(".area-list a").click(function(e){
+                $("#area-btn").html($(this).html());
+                $(".search-btn").attr("area-id", $(this).attr("area-id"));
+                $(".search-btn").attr("area-name", $(this).html());
+                $("#area-modal").modal("hide");
+            });
+       }
+    });
+
+
     $('.modal').on('show.bs.modal', centerModals);      //当模态框出现的时候
     $(window).on('resize', centerModals);               //当窗口大小变化的时候
     $("#start-date").datepicker({
