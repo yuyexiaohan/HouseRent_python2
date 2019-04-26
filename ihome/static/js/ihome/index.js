@@ -68,6 +68,7 @@ $(document).ready(function(){
        }
     }, "json");
 
+    // 设置幻灯片对象，开启幻灯片的滚动，必须放在页面参数填充完之后，执行这段代码
     var mySwiper = new Swiper ('.swiper-container', {
         loop: true,
         autoplay: 2000,

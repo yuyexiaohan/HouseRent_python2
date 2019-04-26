@@ -125,9 +125,9 @@ def get_user_auth():
 def set_user_auth():
 	"""保存用户实名认证信息"""
 	user_id = g.user_id
-
 	# 获取参数
 	req_data = request.get_json()
+	print("req_data:", req_data)
 
 	if not req_data:
 		return jsonify(errno=RET.PARAMERR, errmsg="参数错误")

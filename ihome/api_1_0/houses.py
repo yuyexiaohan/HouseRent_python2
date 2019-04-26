@@ -46,7 +46,7 @@ def get_areas_info():
 
 	# 将数据转换成json字符串
 	resp_dict = dict(errno=RET.OK, errmsg="OK", data=area_dict_li)
-	resp_json = json.dumps(resp_dict)
+	resp_json = json.dumps(resp_dict) # 将字典转换成json数据类型
 
 	# 将数据保存再redis中
 	try:
@@ -475,7 +475,3 @@ def get_house_list():
 			current_app.logger.error(e)
 
 	return resp_json, 200, {"Content-Type": "application/json"}
-
-
-
-
