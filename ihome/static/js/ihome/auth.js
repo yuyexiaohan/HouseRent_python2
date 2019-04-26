@@ -20,7 +20,7 @@ $(document).ready(function () {
             loaction.href = "/login.html";
         } else if (resp.errno === "0") {
             // 如果返回的real_name与id_card不为null，表示用户已经填写实名认证信息，就在实名认证页面展示实名认证的信息
-            if (resp.data.real && resp.data.id_card) {
+            if (resp.data.real_name && resp.data.id_card) {
                 $("#real-name").val(resp.data.real_name);
                 $("#id-card").val(resp.data.id_card);
                 // 给input标签添加disabled属性，禁止用户修改数据
