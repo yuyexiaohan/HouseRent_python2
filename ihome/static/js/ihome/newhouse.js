@@ -19,7 +19,7 @@ $(document).ready(function(){
         } else {
             alert(resp.errmsg);
         }
-    });
+    }, "json");
 
     $("#form-house-info").submit(function (e) {
         // 阻止form默认提交数据
