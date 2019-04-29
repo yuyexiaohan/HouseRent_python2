@@ -11,7 +11,7 @@ from ihome import db, constants, redis_store
 from ihome.models import Area, House, Facility, HouseImage, User,Order
 from ihome.utils.image_storage import storage
 import json
-import datetime
+from datetime import datetime
 
 
 # @api.route("/areas", methods="[GET]")
