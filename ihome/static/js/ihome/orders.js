@@ -28,7 +28,7 @@ $(document).ready(function(){
     $(window).on('resize', centerModals);
     // 查询房客订单
     $.get("/api/v1.0/user/orders?role=custom", function(resp){
-        if ("0" == resp.errno) {
+        if ("0" === resp.errno) {
             $(".orders-list").html(template("orders-list-tmpl", {orders:resp.data.orders}));
             $(".order-pay").on("click", function () {
                 var orderId = $(this).parents("li").attr("order-id");
@@ -37,12 +37,12 @@ $(document).ready(function(){
                     type: "post",
                     dataType: "json",
                     headers: {
-                        "X-CSRFToken": getCookie("csrf_token"),
+                        "X-CSRFToken": getCookie("csrf_token")
                     },
                     success: function (resp) {
-                        if ("4101" == resp.errno) {
+                        if ("4101" === resp.errno) {
                             location.href = "/login.html";
-                        } else if ("0" == resp.errno) {
+                        } else if ("0" === resp.errno) {
                             // 引导用户跳转到支付宝连接
                             location.href = resp.data.pay_url;
                         }
@@ -55,7 +55,7 @@ $(document).ready(function(){
             });
             $(".modal-comment").on("click", function(){
                 var orderId = $(this).attr("order-id");
-                var comment = $("#comment").val()
+                var comment = $("#comment").val();
                 if (!comment) return;
                 var data = {
                     order_id:orderId,
@@ -69,12 +69,12 @@ $(document).ready(function(){
                     contentType:"application/json",
                     dataType:"json",
                     headers:{
-                        "X-CSRFTOKEN":getCookie("csrf_token"),
+                        "X-CSRFToken":getCookie("csrf_token")
                     },
                     success:function (resp) {
-                        if ("4101" == resp.errno) {
+                        if ("4101" === resp.errno) {
                             location.href = "/login.html";
-                        } else if ("0" == resp.errno) {
+                        } else if ("0" === resp.errno) {
                             $(".orders-list>li[order-id="+ orderId +"]>div.order-content>div.order-text>ul li:eq(4)>span").html("已完成");
                             $("ul.orders-list>li[order-id="+ orderId +"]>div.order-title>div.order-operate").hide();
                             $("#comment-modal").modal("hide");
