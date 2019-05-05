@@ -236,5 +236,21 @@ class Order(BaseModel, db.Model):
             "CANCELED",  # 已取消
             "REJECTED"  # 已拒单
         ),
-        default="WAIT_ACCEPT", index=True)
+        default="WAIT_ACCEPT", index=True) # 指明在mysql中这个字段建立索引，加快查询速度
     comment = db.Column(db.Text)  # 订单的评论信息或者拒单原因
+
+    def to_dict(self):
+        """将订单的信息转换为字典数据类型"""
+        order_dict = {
+            "order_id": self.id,
+            "title": self.house.title,
+            "img_url": constants.QINIU_URL_DOMAIN + self.house.index_image_url if self.house.index_image_url else "",
+            "start_date": self.begin_date.strftime("%Y-%m-%d"),
+            "end_date": self.end_date.strftime("%Y-%m-%d"),
+            "ctime": self.crete_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "days": self.days,
+            "amount": self.amount,
+            "status": self.status,
+            "comment": self.comment if self.comment else ""
+        }
+        return order_dict
