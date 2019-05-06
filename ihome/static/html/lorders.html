@@ -22,32 +22,81 @@
         </div>
         <div class="orders-con">
             <ul class="orders-list">
+                <!--<li order-id={{order.order_id}}>-->
+                    <!--<div class="order-title">-->
+                        <!--<h3>订单编号：123</h3>-->
+                        <!--<div class="fr order-operate">-->
+                            <!--<button type="button" class="btn btn-success order-accept" data-toggle="modal" data-target="#accept-modal">接单</button>-->
+                            <!--<button type="button" class="btn btn-danger order-reject" data-toggle="modal" data-target="#reject-modal">拒单</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="order-content">-->
+                        <!--<img src="{{order.img_url}}">-->
+                        <!--<div class="order-text">-->
+                            <!--<h3>房屋标题</h3>-->
+                            <!--<ul>-->
+                                <!--<li>创建时间：2016-11-11</li>-->
+                                <!--<li>入住日期：2016-11-11</li>-->
+                                <!--<li>离开日期：2016-11-11</li>-->
+                                <!--<li>合计金额：￥1000(共1晚)</li>-->
+                                <!--<li>订单状态：-->
+                                    <!--<span>待接单</span>-->
+                                <!--</li>-->
+                                <!--<li>客户评价： 挺好的</li>-->
+                            <!--</ul>-->
+                        <!--</div> -->
+                    <!--</div>-->
+                <!--</li>-->
+            </ul>
+            <script id="order-list-tmpl" type="text/html">
+            {{if orders}}
+                {{each orders as order}}
                 <li order-id={{order.order_id}}>
                     <div class="order-title">
-                        <h3>订单编号：123</h3>
+                        <h3>订单编号：{{order.order_id}}</h3>
+                        {{ if "WAIT_ACCEPT" == order.status }}
                         <div class="fr order-operate">
                             <button type="button" class="btn btn-success order-accept" data-toggle="modal" data-target="#accept-modal">接单</button>
                             <button type="button" class="btn btn-danger order-reject" data-toggle="modal" data-target="#reject-modal">拒单</button>
                         </div>
+                        {{/if}}
                     </div>
                     <div class="order-content">
                         <img src="{{order.img_url}}">
                         <div class="order-text">
-                            <h3>房屋标题</h3>
+                            <h3>{{order.title}}</h3>
                             <ul>
-                                <li>创建时间：2016-11-11</li>
-                                <li>入住日期：2016-11-11</li>
-                                <li>离开日期：2016-11-11</li>
-                                <li>合计金额：￥1000(共1晚)</li>
+                                <li>创建时间：{{order.ctime}}</li>
+                                <li>入住日期：{{order.start_date}}</li>
+                                <li>离开日期：{{order.end_date}}</li>
+                                <li>合计金额：￥{{(order.amount/100.0).toFixed(0)}}(共{{order.days}}晚)</li>
                                 <li>订单状态：
-                                    <span>待接单</span>
+                                    <span>
+                                        {{if "WAIT_ACCEPT" == order.status}}
+                                            待接单
+                                        {{else if "WAIT_COMMENT" == order.status}}
+                                            待评价
+                                        {{else if "COMPLETE" == order.status}}
+                                            已完成
+                                        {{else if "REJECTED" == order.status}}
+                                            已拒单
+                                        {{/if}}
+                                    </span>
                                 </li>
-                                <li>客户评价： 挺好的</li>
+                                {{if "COMPLETE" == order.status}}
+                                <li>我的评价： {{order.comment}}</li>
+                                {{else if "REJECTED" == order.status}}
+                                <li>拒单原因： {{order.comment}}</li>
+                                {{/if}}
                             </ul>
-                        </div> 
+                        </div>
                     </div>
                 </li>
-            </ul>
+                {{/each}}
+                {{else}}
+                暂时没有订单。
+                {{/if}}
+            </script>
             <div class="modal fade" id="accept-modal" tabindex="-1" role="dialog" aria-labelledby="accept-label">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

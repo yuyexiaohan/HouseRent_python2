@@ -247,7 +247,7 @@ class Order(BaseModel, db.Model):
             "img_url": constants.QINIU_URL_DOMAIN + self.house.index_image_url if self.house.index_image_url else "",
             "start_date": self.begin_date.strftime("%Y-%m-%d"),
             "end_date": self.end_date.strftime("%Y-%m-%d"),
-            "ctime": self.crete_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "ctime": self.create_time.strftime("%Y-%m-%d %H:%M:%S"),
             "days": self.days,
             "amount": self.amount,
             "status": self.status,
