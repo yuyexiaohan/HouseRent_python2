@@ -33,7 +33,7 @@ def order_pay(order_id):
 
     # 创建支付宝sdk的工具对象
     alipay_client = AliPay(
-        appid="2016081600258081",
+        appid="2016092100559424",
         app_notify_url=None,  # 默认回调url
         app_private_key_path=os.path.join(os.path.dirname(__file__), "keys/app_private_key.pem"),  # 私钥
         alipay_public_key_path=os.path.join(os.path.dirname(__file__), "keys/alipay_public_key.pem"),  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
@@ -52,6 +52,7 @@ def order_pay(order_id):
 
     # 构建让用户跳转的支付连接地址
     pay_url = constants.ALIPAY_URL_PREFIX + order_string
+    print("pay-url:", pay_url)
     return jsonify(errno=RET.OK, errmsg="OK", data={"pay_url": pay_url})
 
 
@@ -65,7 +66,7 @@ def save_order_payment_result():
 
     # 创建支付宝sdk的工具对象
     alipay_client = AliPay(
-        appid="2016081600258081",
+        appid="2016092100559424",
         app_notify_url=None,  # 默认回调url
         app_private_key_path=os.path.join(os.path.dirname(__file__), "keys/app_private_key.pem"),  # 私钥
         alipay_public_key_path=os.path.join(os.path.dirname(__file__), "keys/alipay_public_key.pem"),

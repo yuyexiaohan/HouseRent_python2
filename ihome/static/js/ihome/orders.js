@@ -32,6 +32,7 @@ $(document).ready(function(){
             $(".orders-list").html(template("orders-list-tmpl", {orders:resp.data.orders}));
             $(".order-pay").on("click", function () {
                 var orderId = $(this).parents("li").attr("order-id");
+                console.log("调用");
                 $.ajax({
                     url: "/api/v1.0/orders/" + orderId + "/payment",
                     type: "post",
@@ -48,6 +49,7 @@ $(document).ready(function(){
                         }
                     }
                 });
+                console.log("resp.errno:", resp.errno );
             });
             $(".order-comment").on("click", function(){
                 var orderId = $(this).parents("li").attr("order-id");
@@ -84,6 +86,4 @@ $(document).ready(function(){
             });
         }
     });
-
-
 });

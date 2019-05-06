@@ -29,9 +29,13 @@
                 <li order-id={{order.order_id}}>
                     <div class="order-title">
                         <h3>订单编号：{{order.order_id}}</h3>
-                        {{ if 3 == order.status }}
+                        {{ if "WAIT_COMMENT" == order.status }}
                         <div class="fr order-operate">
                             <button type="button" class="btn btn-success order-comment" data-toggle="modal" data-target="#comment-modal">发表评价</button>
+                        </div>
+                        {{ else if "WAIT_PAYMENT" == order.status }}
+                        <div class="fr order-operate">
+                            <button type="button" class="btn btn-success order-pay">去支付</button>
                         </div>
                         {{/if}}
                     </div>
@@ -49,9 +53,11 @@
                                         {{if "WAIT_ACCEPT" == order.status}}
                                             待接单
                                         {{else if "WAIT_PAYMENT" == order.status}}
-                                            待评价
+                                            待支付
                                         {{else if "COMPLETE" == order.status}}
                                             已完成
+                                        {{else if "WAIT_COMMENT" == order.status}}
+                                            待评价
                                         {{else if "REJECTED" == order.status}}
                                             已拒单
                                         {{/if}}
