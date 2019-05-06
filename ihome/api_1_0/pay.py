@@ -60,6 +60,21 @@ def order_pay(order_id):
 def save_order_payment_result():
     """保存订单支付结果"""
     alipay_dict = request.form.to_dict()
+    # 'alipay_dict:',
+    # {
+    # 'trade_no': u'2019050622001476141000057947',
+    # 'seller_id': u'2088102176558614',
+    # 'total_amount': u'600.00',
+    # 'timestamp': u'2019-05-06 22:19:48',
+    # 'charset': u'utf-8',
+    # 'app_id': u'2016092100559424',
+    # 'sign': u'hQGBJAlD1s7tBpJDcDzRyYve8yjtaCXgSX53uSAkmv7bpT8ecOJnhz9FQZZ5wutfPpXqxUMUm4rodyOFEGZynya6r1UCb88E5g6Rg1YN7NFTQpDt97VyJK273Ep43e4IjfMKl++P4ADp9zWTSCgMcGioKMchUzL+JgkRdrFHpgjBG+J45ZxmQvGXRMSpYQf+7PdgzwN/k+1RMVTOOpol8b7rOgBLp+hN9x6zIBGQL0YXdmfJlxt/NnY/u4b8nQhi4JI7jA05Ux3b/4pRdks0S/uUarzXi0jFiG7rpK193QuSyUVyX+3bb0eVwjIJ46npbehYtVQhPfq03k6I0NZkOQ==',
+    # 'out_trade_no': u'6',
+    # 'version': u'1.0',
+    # 'sign_type': u'RSA2',
+    # 'auth_app_id': u'2016092100559424',
+    # 'method': u'alipay.trade.wap.pay.return'
+    # }
 
     # 对支付宝的数据进行分离  提取出支付宝的签名参数sign 和剩下的其他数据
     alipay_sign = alipay_dict.pop("sign")

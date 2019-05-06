@@ -21,8 +21,10 @@
             </div>
         </div>
         <div class="orders-con">
-        <p> 支付已完成 </p>
-        <a href="/orders.html">回到我的订单</a>
+            <h3 style="">
+                <p> 支付已完成 </p>
+                <a href="/orders.html">回到我的订单</a>
+            </h3>
         </div>
         <div class="footer">
             <p><span><i class="fa fa-copyright"></i></span>爱家租房&nbsp;&nbsp;享受家的温馨</p>
@@ -41,6 +43,7 @@
         }
 
         var alipayData = document.location.search.substr(1);
+        console.log("alipayData:", alipayData);
         $.ajax({
             url: "/api/v1.0/order/payment",
             type: "put",
