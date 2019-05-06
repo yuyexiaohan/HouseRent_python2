@@ -238,6 +238,7 @@ class Order(BaseModel, db.Model):
         ),
         default="WAIT_ACCEPT", index=True) # 指明在mysql中这个字段建立索引，加快查询速度
     comment = db.Column(db.Text)  # 订单的评论信息或者拒单原因
+    trade_no = db.Column(db.String(128))  # 支付宝交易流水号
 
     def to_dict(self):
         """将订单的信息转换为字典数据类型"""
