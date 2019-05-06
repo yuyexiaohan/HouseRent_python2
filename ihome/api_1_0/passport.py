@@ -167,6 +167,8 @@ def check_login():
 @api.route("/session", methods=["DELETE"])
 def logout():
 	"""登出"""
-	# 清除session数据
-	session.clear()
+	# 清除session数据--解决csrf_token存储记录bug
+	csrf_token = session.get("csrf_token")  # 清除前先获取csrf_token
+	session.clear()  # 清除session数据
+	session["csrf_token"] = csrf_token  # 将之前提取的csrf_token保存到session中
 	return jsonify(errno=RET.OK, errmsg="OK")
