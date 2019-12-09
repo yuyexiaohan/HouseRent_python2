@@ -2,12 +2,10 @@
 # Time : 2019/4/15
 # Author : achjiang
 
-
 # 引入蓝图
 from flask import Blueprint, current_app, make_response
 # 导入crsf进行跨域保护
 from flask_wtf import csrf
-
 
 
 # 提供静态文件的蓝图
@@ -17,6 +15,7 @@ html = Blueprint("web_html", __name__)
 # 127.0.0.1:8080/(index.html)
 # 127.0.0.1:8080/register.html
 # 127.0.0.1:8080/favicon.ico # 浏览器默认为网络图标，会自己请求这个资源
+
 
 @html.route("/<re(r'.*'):html_file_name>")
 def get_html(html_file_name):
@@ -41,6 +40,3 @@ def get_html(html_file_name):
 	# 不设置有效期，当前窗口关闭后无效
 
 	return response
-
-
-
