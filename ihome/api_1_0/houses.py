@@ -8,7 +8,7 @@ from ihome.utils.commons import login_required
 from flask import g, current_app, jsonify, request, session
 from ihome.utils.response_code import RET
 from ihome import db, constants, redis_store
-from ihome.models import Area, House, Facility, HouseImage, User,Order
+from ihome.models import Area, House, Facility, HouseImage, User, Order
 from ihome.utils.image_storage import storage
 import json
 from datetime import datetime
@@ -42,11 +42,11 @@ def get_areas_info():
 	area_dict_li = []
 	# 将对象转换为字典
 	for area in area_li:
-		area_dict_li.append(area.to_dict()) # to_dict是返回一个字典
+		area_dict_li.append(area.to_dict())  # to_dict是返回一个字典
 
 	# 将数据转换成json字符串
 	resp_dict = dict(errno=RET.OK, errmsg="OK", data=area_dict_li)
-	resp_json = json.dumps(resp_dict) # 将字典转换成json数据类型
+	resp_json = json.dumps(resp_dict)  # 将字典转换成json数据类型
 
 	# 将数据保存再redis中
 	try:
@@ -179,7 +179,7 @@ def save_house_image():
 	参数 图片 房屋的id
 	"""
 	image_file = request.files.get("house_image")
-	house_id = request.form.get("house_id") # 从form表单中拿去数据
+	house_id = request.form.get("house_id")  # 从form表单中拿去数据
 
 	if not all([image_file, house_id]):
 		return jsonify(erron=RET.PARAMERR, errmsg="参数错误")
@@ -237,7 +237,7 @@ def get_user_houses():
 		houses = user.houses
 	except Exception as e:
 		current_app.logger.error(e)
-		return jsonify (errno=RET.DBERR, errmsg="获取参数失败")
+		return jsonify(errno=RET.DBERR, errmsg="获取参数失败")
 
 # 将查询的房屋信息转换成字典放在列表中
 	houses_list = []
@@ -309,8 +309,8 @@ def get_house_detail(house_id):
 		ret = None
 	if ret:
 		current_app.logger.info("hit house info redis")
-		return '{"errno":"0", "errmsg":"OK", "data":{"user_id":%s, "house":%s}}' % (user_id, ret), \
-			   200, {"Content-Type": "application/json"}
+		return '{"errno":"0", "errmsg":"OK", "data":{"user_id":%s, "house":%s}}' \
+			   % (user_id, ret), 200, {"Content-Type": "application/json"}
 
 	# 查询数据库
 	try:
@@ -336,8 +336,8 @@ def get_house_detail(house_id):
 	except Exception as e:
 		current_app.logger.error(e)
 
-	resp = '{"errno":"0", "errmsg":"OK", "data":{"user_id":%s, "house":%s}}' % (user_id, json_house), \
-		   200, {"Content-Type": "application/json"}
+	resp = '{"errno":"0", "errmsg":"OK", "data":{"user_id":%s, "house":%s}}' \
+		   % (user_id, json_house), 200, {"Content-Type": "application/json"}
 	return resp
 
 
@@ -368,7 +368,7 @@ def get_house_list():
 	# 判断区域id
 	if area_id:
 		try:
-			area = Area.query.get(area_id)
+			Area.query.get(area_id)
 		except Exception as e:
 			current_app.logger.error(e)
 			return jsonify(errno=RET.PARAMERR, errmsg="区域参数有误")
