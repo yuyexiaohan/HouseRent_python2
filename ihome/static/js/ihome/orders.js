@@ -11,6 +11,7 @@ function centerModals(){
 
 function getCookie(name) {
     var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    console.log("r:", r);
     return r ? r[1] : undefined;
 }
 

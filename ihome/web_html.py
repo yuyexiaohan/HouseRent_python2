@@ -4,7 +4,7 @@
 
 # 引入蓝图
 from flask import Blueprint, current_app, make_response
-# 导入crsf进行跨域保护
+# 导入csrf进行跨域保护
 from flask_wtf import csrf
 
 
