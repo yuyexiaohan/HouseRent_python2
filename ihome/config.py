@@ -3,6 +3,7 @@
 # Author : achjiang
 
 import redis
+from parameter import user_name, mysql_password
 
 
 class Config(object):
@@ -13,7 +14,8 @@ class Config(object):
 
 	# mysql数据库配置：
 	# 1.设置连接数据库的URL:'mysql://用户名:密码@host:prot/database_name'
-	SQLALCHEMY_DATABASE_URI = "mysql://root:qwe123@127.0.0.1:3306/ihome_python2"
+	# SQLALCHEMY_DATABASE_URI = "mysql://root:qwe123@127.0.0.1:3306/ihome_python2"
+	SQLALCHEMY_DATABASE_URI = "mysql://" + user_name + ":" + mysql_password + "@127.0.0.1:3306/ihome"
 	# 2.设置每次请求结束后会自动提交数据库中的改动
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 
