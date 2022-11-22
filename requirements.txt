@@ -18,7 +18,7 @@ Mako==1.0.7
 MarkupSafe==1.0
 MySQL-python==1.2.5
 olefile==0.44
-Pillow==4.2.1
+Pillow==9.3.0
 pycryptodome==3.4.7
 python-alipay-sdk==1.4.0
 python-dateutil==2.6.1
